@@ -27,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
         type?.let { searchActivities(it,2) }
 
 
-        binding.BTNTtryAnother.setOnClickListener {
+        binding.btnTryAnother.setOnClickListener {
             type?.let { searchActivities(it,2) }
         }
     }
@@ -60,16 +60,14 @@ class DetailActivity : AppCompatActivity() {
                             //TODO NULL RESPONSE
                     }
                 }
-
-
             }
 
     }
 
 
     fun loadResponse(notBoredResponse: NotBoredResponse?){
-        binding.TVActivity.text = notBoredResponse?.activity
-        binding.TVParticipants.text = notBoredResponse?.participants.toString()
+        binding.tvActivityDetails.text = notBoredResponse?.activity
+        binding.tvParticupantsDetails.text = notBoredResponse?.participants.toString()
 
 
 
@@ -80,7 +78,7 @@ class DetailActivity : AppCompatActivity() {
             else -> "High"
         }
 
-        binding.TVPrice.text = price
+        binding.tvPriceDetails.text = price
 
     }
 
