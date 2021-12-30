@@ -14,16 +14,35 @@ class InitialActivity : AppCompatActivity() {
         setContentView(R.layout.activity_initial)
         binding = ActivityInitialBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setOnClickListeners()
+    }
 
-
+    fun setOnClickListeners (){
         binding.btnstart.setOnClickListener {
-                val int =binding.ETNumParticipants.text.toString().toInt()
-            if (int>0) {
-                val intent = Intent(this, ActivitiesActivity::class.java)
-                intent.putExtra("participants", binding.ETNumParticipants.inputType)
-                startActivity(intent)
+            if (validateInputs(binding.ETNumParticipants.text.toString())) {
+                val participants =0
+                Toast.makeText(this,"At least one participant to continue",Toast.LENGTH_LONG).show()
+                //goActivities(participants)
+            }else{
+                val participants =binding.ETNumParticipants.text.toString().toInt()
+                if (participants>0) {
+                    goActivities(participants)
+                }
             }
         }
 
+        binding.TVTermsAndConditions.setOnClickListener {
+               val intent = Intent(this, TermsAndConditionsActivity::class.java)
+             startActivity(intent)
+        }
+
+    }
+    fun validateInputs (inputParticipants : String):Boolean{
+        return inputParticipants == "" || inputParticipants.toInt() == 0
+    }
+    fun goActivities(participants : Int){
+        val intent = Intent(this, ActivitiesActivity::class.java)
+        intent.putExtra("participants", participants)
+        startActivity(intent)
     }
 }
