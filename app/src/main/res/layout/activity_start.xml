@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/TV_participants" />
 
     <Button
-        android:id="@+id/BTN_start"
+        android:id="@+id/btnstart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -63,15 +63,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ET_NumParticipants" />
 
-    <EditText
+    <TextView
         android:id="@+id/TV_termsAndConditions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/terms_and_conditions"
-        app:layout_constraintEnd_toEndOf="@+id/BTN_start"
-        app:layout_constraintStart_toStartOf="@+id/BTN_start"
-        app:layout_constraintTop_toBottomOf="@+id/BTN_start" />
+        app:layout_constraintEnd_toEndOf="@+id/btnstart"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/btnstart"
+        app:layout_constraintTop_toBottomOf="@+id/btnstart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
