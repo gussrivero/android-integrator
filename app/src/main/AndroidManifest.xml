@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".views.TermsAndConditionsActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".views.InitialActivity"
             android:exported="true">

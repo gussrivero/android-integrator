@@ -9,6 +9,8 @@ interface APINotBored {
     suspend fun getActivitiesByType(@Url url:String): Response<NotBoredResponse>
     @GET
     suspend fun getActivitiesByParticipants(@Url url: String): Response<NotBoredResponse>
+    @GET
+    suspend fun getActivitiesByParticipantsAndType(@Url url: String): Response<NotBoredResponse>
 
 
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ActivitiesAdapter(
     private val nameActivities: List<String>,
     val context: Context,
-    val participants: Int?
+    val participants: String
 ) : RecyclerView.Adapter<ActivitiesViewHolder>() {
 
 

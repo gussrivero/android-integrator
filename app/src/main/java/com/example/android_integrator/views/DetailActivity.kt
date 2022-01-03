@@ -20,14 +20,15 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDetailBinding
     private val BASE_URL = "http://www.boredapi.com/api/"
     private lateinit var call : Response<NotBoredResponse>
-    var participants: Int? = null
+    private lateinit var participants: String
+    private val RANDOM = "Random"
     lateinit var type : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-         participants = intent.getIntExtra("participants",1)
+         participants = intent.getStringExtra("participants").toString()
          type = intent.getStringExtra(KeyIntents.DETAIL.name).toString()
 
         binding.TBDetailActivities.title = type.replaceFirstChar {
@@ -59,18 +60,21 @@ class DetailActivity : AppCompatActivity() {
             .build()
     }
 
-
-    fun searchActivities(type : String,amountParticipants : Int?){
+    fun validateRetrofitCallCases (type: String,amountParticipants: String):String{
+        //participants and random
+        return if (type == RANDOM&& amountParticipants!="") "activity?participants=$amountParticipants"
+        //participants and type
+        else if (type != RANDOM && amountParticipants !="") "activity?type=$type&participants=$amountParticipants"
+        //no participants y type
+        else if (type !=RANDOM && amountParticipants=="") "activity?type=$type"
+        // no participants and random
+        else "activity"
+    }
+    fun searchActivities(type : String,amountParticipants : String){
 
             CoroutineScope(Dispatchers.IO).launch{
-                   call = if (amountParticipants != null) {
-                       getRetrofit().create(APINotBored::class.java)
-                           .getActivitiesByParticipants("activity?participants=$amountParticipants")
-                   }else {
-                       getRetrofit().create(APINotBored::class.java)
-                           .getActivitiesByType("activity?type=$type")
-                   }
-
+                   call = getRetrofit().create(APINotBored::class.java)
+                           .getActivitiesByParticipants(validateRetrofitCallCases(type,amountParticipants))
 
                 val notBoredResponse : NotBoredResponse? = call.body()
 
@@ -88,27 +92,21 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
             }
-
     }
-
 
     fun loadResponse(notBoredResponse: NotBoredResponse?){
         binding.tvCategoryTitleDetail.text = notBoredResponse?.activity
         binding.tvParticupantsDetails.text = notBoredResponse?.participants.toString()
         binding.tvTypeActivityDetails.text = notBoredResponse?.type
 
-
         val price = when(notBoredResponse!!.price){
-            0f  -> "Free"
-            in 0f..0.3f -> "Low"
-            in 0.3f..0.6f -> "Medium"
-            else -> "High"
+            0f  -> PriceType.Free
+            in 0f..0.3f -> PriceType.Low
+            in 0.3f..0.6f -> PriceType.Medium
+            else -> PriceType.High
         }
 
-        binding.tvPriceDetails.text = price
+        binding.tvPriceDetails.text = price.toString()
 
     }
-
-
-
 }

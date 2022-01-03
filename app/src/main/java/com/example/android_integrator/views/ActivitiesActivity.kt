@@ -14,7 +14,7 @@ import com.example.android_integrator.databinding.ActivityActivitiesBinding
 
 class ActivitiesActivity : AppCompatActivity() {
 
-    private  var participants :Int? = null
+    private lateinit var participants :String
     private lateinit var binding: ActivityActivitiesBinding
     private lateinit var adapter: ActivitiesAdapter
     private val RANDOM = "Random"
@@ -30,7 +30,7 @@ class ActivitiesActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.TBActivities)
 
-         participants = intent.getIntExtra("participants",1)
+         participants = intent.getStringExtra("participants").toString()
         loadRecyclerView()
         binding.TBActivities.title= ACTIVITIES
     }

@@ -22,11 +22,12 @@ class InitialActivity : AppCompatActivity() {
     fun setOnClickListeners (){
         binding.btnstart.setOnClickListener {
           if (binding.chTermAndCon.isChecked) {
-              if (binding.ETNumParticipants.text.toString() == "") {
-                  goActivities(null)
+              val inputParticipants =binding.ETNumParticipants.text.toString().replace(" ","")
+              if (inputParticipants== "") {
+                  goActivities("")
               } else {
-                  val participants = binding.ETNumParticipants.text.toString().toInt()
-                  if (participants > 0) goActivities(participants)
+                  val participants = binding.ETNumParticipants.text.toString().replace(" ","").toInt()
+                  if (participants > 0) goActivities(participants.toString())
                   else Toast.makeText(this,getString(R.string.at_least_one_participant),Toast.LENGTH_LONG).show()
               }
           }else Toast.makeText(this,getString(R.string.acept_tac),Toast.LENGTH_LONG).show()
@@ -39,9 +40,9 @@ class InitialActivity : AppCompatActivity() {
 
     }
 
-    fun goActivities(participants : Int?){
+    fun goActivities(participants : String){
         val intent = Intent(this, ActivitiesActivity::class.java)
-        intent.putExtra(nPARTICIPANTS, participants)
+        intent.putExtra(nPARTICIPANTS, participants.toString())
         startActivity(intent)
     }
 }
