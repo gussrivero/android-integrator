@@ -81,12 +81,17 @@ class DetailActivity : AppCompatActivity() {
                 runOnUiThread{
 
                     notBoredResponse.let {
-                        loadResponse(it)
-                        if(call.isSuccessful){
+                        if (it != null) {
+                            if(it.activity!=null) {
+                                loadResponse(it)
+                                if (call.isSuccessful) {
 
-                        }else{
-                            //TODO NOT SUCCESSFUL
+                                } else {
+                                    //TODO NOT SUCCESSFUL
+                                }
+                            }
                         }
+
                     } ?: run {
                             //TODO NULL RESPONSE
                     }
