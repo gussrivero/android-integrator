@@ -8,21 +8,21 @@ import com.example.android_integrator.R
 import com.example.android_integrator.TypeActivity
 import com.example.android_integrator.databinding.ActivityDetailBinding
 import com.example.android_integrator.models.APINotBored
+import com.example.android_integrator.models.ApiNotBoredImp
 import com.example.android_integrator.models.NotBoredResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
-
     private lateinit var binding : ActivityDetailBinding
-    private val BASE_URL = "http://www.boredapi.com/api/"
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -58,37 +58,22 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-
-    fun validateRetrofitCallCases (type: String,amountParticipants: Int):String{
-
-        //participants and random
-        return if (type == TypeActivity.RANDOM.name && amountParticipants > 0) "activity?participants=$amountParticipants"
-        //participants and type
-        else if (type != TypeActivity.RANDOM.name && amountParticipants > 0) "activity?type=$type&participants=$amountParticipants"
-        //no participants y type
-        else if (type != TypeActivity.RANDOM.name && amountParticipants == 0) "activity?type=$type"
-        // no participants and random
-        else "activity"
+    suspend fun validateRetrofitCallCases (type: String, amountParticipants: Int):Response<NotBoredResponse>{
+        return if (type != TypeActivity.RANDOM.name && amountParticipants > 0) {//participants and type
+            ApiNotBoredImp().getActivitiesByParticipantsAndType(type, amountParticipants)
+        } else if (type == TypeActivity.RANDOM.name && amountParticipants > 0) {//participants and random
+            ApiNotBoredImp().getActivitiesByParticipants(amountParticipants)
+        } else if (type != TypeActivity.RANDOM.name && amountParticipants == 0) {//no participants y type
+            ApiNotBoredImp().getActivitiesByType(type)
+        } else ApiNotBoredImp().getRandom()        // no participants and random
     }
 
     fun searchActivities(type : String,amountParticipants : Int){
-
-
             CoroutineScope(Dispatchers.IO).launch{
-                val call = getRetrofit().create(APINotBored::class.java)
-                           .getActivitiesByParticipants(validateRetrofitCallCases(type,amountParticipants))
-                System.out.println(validateRetrofitCallCases(type,amountParticipants))
+                val call = validateRetrofitCallCases(type,amountParticipants)
                 val notBoredResponse : NotBoredResponse? = call.body()
 
                 runOnUiThread{
-
                     notBoredResponse.let {
                         if(call.isSuccessful){
                             if(!call.body()?.activity.isNullOrEmpty()){
