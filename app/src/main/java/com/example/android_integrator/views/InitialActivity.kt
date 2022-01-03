@@ -7,9 +7,12 @@ import android.widget.Toast
 import com.example.android_integrator.KeyIntents
 import com.example.android_integrator.R
 import com.example.android_integrator.databinding.ActivityInitialBinding
+import com.example.android_integrator.models.OneActivity
+import com.google.android.material.slider.RangeSlider
 
-class InitialActivity : AppCompatActivity() {
+class InitialActivity : AppCompatActivity(), RangeSlider.OnChangeListener {
     private lateinit var binding: ActivityInitialBinding
+    private var oneActivity =  OneActivity(0,"",0f,1f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,16 +21,17 @@ class InitialActivity : AppCompatActivity() {
         setContentView(binding.root)
         setOnClickListeners()
 
+        binding.SBPrice.addOnChangeListener(this)
     }
 
     fun setOnClickListeners (){
         binding.btnstart.setOnClickListener {
           if (binding.chTermAndCon.isChecked) {
               if (binding.ETNumParticipants.text.toString().trim().isEmpty()) {
-                  goActivities(0)
+                  goActivities(oneActivity)
               } else {
-                  val participants = binding.ETNumParticipants.text.toString().trim().toInt()
-                  goActivities(participants)
+                  oneActivity.amountParticipants = binding.ETNumParticipants.text.toString().trim().toInt()
+                  goActivities(oneActivity)
               }
           }else Toast.makeText(this,getString(R.string.acept_tac),Toast.LENGTH_LONG).show()
         }
@@ -39,9 +43,16 @@ class InitialActivity : AppCompatActivity() {
 
     }
 
-    fun goActivities(participants : Int){
+    fun goActivities(oneActivity: OneActivity){
         val intent = Intent(this, ActivitiesActivity::class.java)
-        intent.putExtra(KeyIntents.PARTICIPANTS.name, participants)
+        intent.putExtra(KeyIntents.ONEACTIVITY.name, oneActivity)
         startActivity(intent)
     }
+
+    override fun onValueChange(slider: RangeSlider, value: Float, fromUser: Boolean) {
+        oneActivity.minPrice = slider.values[0]
+        oneActivity.maxPrice = slider.values[1]
+    }
+
+
 }

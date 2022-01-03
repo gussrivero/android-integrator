@@ -11,11 +11,12 @@ import com.example.android_integrator.KeyIntents
 import com.example.android_integrator.R
 import com.example.android_integrator.TypeActivity
 import com.example.android_integrator.databinding.ActivityActivitiesBinding
+import com.example.android_integrator.models.OneActivity
 
 
 class ActivitiesActivity : AppCompatActivity() {
 
-    private var participants = 0
+    private lateinit var oneActivity : OneActivity
     private lateinit var binding: ActivityActivitiesBinding
 
 
@@ -25,8 +26,10 @@ class ActivitiesActivity : AppCompatActivity() {
         binding = ActivityActivitiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.TBActivities)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        participants = intent.getIntExtra(KeyIntents.PARTICIPANTS.name,0)
+        oneActivity = intent.getSerializableExtra(KeyIntents.ONEACTIVITY.name) as OneActivity
+
 
         loadRecyclerView()
     }
@@ -36,7 +39,7 @@ class ActivitiesActivity : AppCompatActivity() {
 
         val nameActivities = mutableListOf<String>("education", "recreational", "social", "diy",
             "charity", "cooking", "relaxation", "music", "busywork")
-        val adapter = ActivitiesAdapter(nameActivities,this, participants)
+        val adapter = ActivitiesAdapter(nameActivities,this, oneActivity)
         binding.RVActivities.layoutManager = LinearLayoutManager(this)
         binding.RVActivities.adapter = adapter
 
@@ -47,8 +50,8 @@ class ActivitiesActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.ActionRandom -> {
                 val intent = Intent(this, DetailActivity::class.java).apply {
-                    putExtra(KeyIntents.PARTICIPANTS.name,participants)
-                    putExtra(KeyIntents.DETAIL.name, TypeActivity.RANDOM.name)
+                    oneActivity.type = TypeActivity.RANDOM.name
+                    putExtra(KeyIntents.ONEACTIVITY.name,oneActivity)
                 }
                 startActivity(intent)
             }

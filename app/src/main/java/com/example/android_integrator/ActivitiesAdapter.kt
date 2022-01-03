@@ -4,11 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_integrator.models.OneActivity
 
 class ActivitiesAdapter(
     private val nameActivities: List<String>,
     val context: Context,
-    val participants: Int
+    val oneActivity: OneActivity
 ) : RecyclerView.Adapter<ActivitiesViewHolder>() {
 
 
@@ -21,7 +22,7 @@ class ActivitiesAdapter(
     override fun onBindViewHolder(holder: ActivitiesViewHolder, position: Int) {
         val nameAtPosition = nameActivities[position]
 
-        holder.bind(nameAtPosition,context, participants)
+        holder.bind(nameAtPosition,context, oneActivity)
 
     }
 

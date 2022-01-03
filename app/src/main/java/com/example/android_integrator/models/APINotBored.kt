@@ -17,5 +17,12 @@ interface APINotBored {
     @GET("activity")
     suspend fun getActivitiesByParticipants(@Query("participants")participants: Int): Response<NotBoredResponse>
 
+    @GET("activity")
+    suspend fun getActivitiesByParticipantsAndTypeWithPrice(@Query("type") type:String, @Query("participants")participants:Int,
+                                                            @Query("minprice")minPrice: Float,@Query("maxprice")maxPrice: Float): Response<NotBoredResponse>
+
+    @GET("activity")
+    suspend fun getActivitiesByTypeWithPrice(@Query("type")type:String,
+                                             @Query("minprice")minPrice: Float,@Query("maxprice")maxPrice: Float): Response<NotBoredResponse>
 
 }
