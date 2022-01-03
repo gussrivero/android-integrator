@@ -31,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
         val participants = intent.getIntExtra(KeyIntents.PARTICIPANTS.name,0)
         val type = intent.getStringExtra(KeyIntents.DETAIL.name)
 
+        System.out.println("CANT "+participants)
         binding.TBDetailActivities.title = type?.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(
                 Locale.getDefault()
@@ -83,7 +84,7 @@ class DetailActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch{
                 val call = getRetrofit().create(APINotBored::class.java)
                            .getActivitiesByParticipants(validateRetrofitCallCases(type,amountParticipants))
-
+                System.out.println(validateRetrofitCallCases(type,amountParticipants))
                 val notBoredResponse : NotBoredResponse? = call.body()
 
                 runOnUiThread{

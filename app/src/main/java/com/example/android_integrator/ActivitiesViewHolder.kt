@@ -21,7 +21,7 @@ class ActivitiesViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
             val intent = Intent(context, DetailActivity::class.java).apply {
                 putExtra(KeyIntents.DETAIL.name, name)
-                putExtra("participants",participants)
+                putExtra(KeyIntents.PARTICIPANTS.name,participants)
             }
             context.startActivity(intent)
 
