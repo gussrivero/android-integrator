@@ -23,10 +23,10 @@ class InitialActivity : AppCompatActivity() {
     fun setOnClickListeners (){
         binding.btnstart.setOnClickListener {
           if (binding.chTermAndCon.isChecked) {
-              if (binding.ETNumParticipants.text.toString().isEmpty()) {
+              if (binding.ETNumParticipants.text.toString().trim().isEmpty()) {
                   goActivities(0)
               } else {
-                  val participants = binding.ETNumParticipants.text.toString().toInt()
+                  val participants = binding.ETNumParticipants.text.toString().trim().toInt()
                   goActivities(participants)
               }
           }else Toast.makeText(this,getString(R.string.acept_tac),Toast.LENGTH_LONG).show()

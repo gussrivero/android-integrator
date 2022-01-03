@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.android_integrator.KeyIntents
+import com.example.android_integrator.R
 import com.example.android_integrator.TypeActivity
 import com.example.android_integrator.databinding.ActivityDetailBinding
 import com.example.android_integrator.models.APINotBored
@@ -50,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun hideType(type: String) {
-        if (type==TypeActivity.RANDOM.name) {
+        if (type == TypeActivity.RANDOM.name) {
             binding.tvTypeActivityDetails.visibility = View.VISIBLE
             binding.ivTypeDetails.visibility = View.VISIBLE
         }
@@ -111,10 +112,10 @@ class DetailActivity : AppCompatActivity() {
 
 
         val price = when(notBoredResponse!!.price){
-            0f  -> "Free"
-            in 0f..0.3f -> "Low"
-            in 0.3f..0.6f -> "Medium"
-            else -> "High"
+            0f  -> getString(R.string.cost_free)
+            in 0f..0.3f -> getString(R.string.cost_low)
+            in 0.3f..0.6f -> getString(R.string.cost_medium)
+            else -> getString(R.string.cost_high)
         }
 
         binding.tvPriceDetails.text = price
