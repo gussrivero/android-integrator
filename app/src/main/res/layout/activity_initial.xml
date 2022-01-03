@@ -67,12 +67,19 @@
         android:id="@+id/TV_termsAndConditions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_marginTop="8dp"
         android:text="@string/terms_and_conditions"
         app:layout_constraintEnd_toEndOf="@+id/btnstart"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/btnstart"
         app:layout_constraintTop_toBottomOf="@+id/btnstart" />
+
+    <CheckBox
+        android:id="@+id/ch_term_and_con"
+        android:layout_width="37dp"
+        android:layout_height="44dp"
+        app:layout_constraintBottom_toBottomOf="@+id/TV_termsAndConditions"
+        app:layout_constraintEnd_toStartOf="@+id/TV_termsAndConditions"
+        app:layout_constraintTop_toTopOf="@+id/TV_termsAndConditions"
+        app:layout_constraintVertical_bias="0.50" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

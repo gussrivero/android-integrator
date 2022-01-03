@@ -15,4 +15,8 @@
     <string name="cantx">0</string>
     <string name="pricex">$</string>
     <string name="try_another">Try Another</string>
+    <string name="acept_tac">You must acept Terms and Conditions to continue</string>
+    <string name="at_least_one_participant">At least one participant to continue</string>
+
+
 </resources>

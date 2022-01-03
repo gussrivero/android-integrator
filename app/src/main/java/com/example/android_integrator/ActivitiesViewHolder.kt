@@ -14,13 +14,14 @@ class ActivitiesViewHolder(view : View) : RecyclerView.ViewHolder(view) {
     private val binding = ItemActivitiesBinding.bind(view)
 
 
-    fun bind(name : String,context : Context){
+    fun bind(name : String,context : Context, participants:Int?){
 
         binding.TVName.text = name
         binding.root.setOnClickListener {
 
             val intent = Intent(context, DetailActivity::class.java).apply {
                 putExtra(KeyIntents.DETAIL.name, name)
+                putExtra("participants",participants)
             }
             context.startActivity(intent)
 

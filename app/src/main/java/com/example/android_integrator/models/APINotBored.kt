@@ -6,7 +6,9 @@ import retrofit2.http.Url
 
 interface APINotBored {
     @GET
-    suspend fun getActivities(@Url url:String): Response<NotBoredResponse>
+    suspend fun getActivitiesByType(@Url url:String): Response<NotBoredResponse>
+    @GET
+    suspend fun getActivitiesByParticipants(@Url url: String): Response<NotBoredResponse>
 
 
 }

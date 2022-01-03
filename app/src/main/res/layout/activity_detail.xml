@@ -7,7 +7,7 @@
     tools:context=".views.DetailActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/TBActivities"
+        android:id="@+id/TBDetailActivities"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -20,14 +20,14 @@
         app:popupTheme="@style/Theme.Androidintegrator"/>
 
     <TextView
-        android:id="@+id/TV_category"
+        android:id="@+id/tv_category_title_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TBActivities"
+        app:layout_constraintTop_toBottomOf="@+id/TBDetailActivities"
         app:layout_constraintVertical_bias="0.217"
         tools:text="Category Detail Name"/>
 
@@ -38,7 +38,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="104dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TV_category"
+        app:layout_constraintTop_toBottomOf="@+id/tv_category_title_detail"
         app:srcCompat="@drawable/ic_baseline_person_46" />
 
     <ImageView
@@ -52,16 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:srcCompat="@drawable/ic_baseline_attach_money_46" />
 
-    <Button
-        android:id="@+id/btn_try_another"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/try_another"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TV_category"
-        app:layout_constraintVertical_bias="0.873" />
+
 
     <TextView
         android:id="@+id/textView3"
@@ -105,23 +96,35 @@
         tools:text="Medium" />
 
     <TextView
-        android:id="@+id/tv_activity_details"
+        android:id="@+id/tv_type_activity_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:text="Relaxation" />
+        tools:text="Relaxation"
+        android:visibility="invisible"/>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_type_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_activity_details"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_type_activity_details"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/tv_activity_details"
-        app:srcCompat="@drawable/ic_baseline_reorder_46" />
+        app:layout_constraintTop_toTopOf="@+id/tv_type_activity_details"
+        app:srcCompat="@drawable/ic_baseline_reorder_46"
+        android:visibility="invisible"/>
 
+    <Button
+        android:id="@+id/btn_try_another"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/try_another"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_category_title_detail"
+        app:layout_constraintVertical_bias="0.873" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

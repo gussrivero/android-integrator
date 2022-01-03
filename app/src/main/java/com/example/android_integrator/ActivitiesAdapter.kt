@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ActivitiesAdapter(private val nameActivities : List<String>, val context : Context) : RecyclerView.Adapter<ActivitiesViewHolder>() {
-
+class ActivitiesAdapter(
+    private val nameActivities: List<String>,
+    val context: Context,
+    val participants: Int?
+) : RecyclerView.Adapter<ActivitiesViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivitiesViewHolder {
@@ -17,7 +20,8 @@ class ActivitiesAdapter(private val nameActivities : List<String>, val context :
 
     override fun onBindViewHolder(holder: ActivitiesViewHolder, position: Int) {
         val nameAtPosition = nameActivities[position]
-        holder.bind(nameAtPosition,context)
+
+        holder.bind(nameAtPosition,context, participants)
 
     }
 
