@@ -3,16 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_activities.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/layout/activity_activities.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/activity_activitis.xml" value="0.22395833333333334" />
-        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/activity_initial.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22395833333333334" />
-        <entry key="app/src/main/res/layout/activity_start.xml" value="0.33177083333333335" />
-        <entry key="app/src/main/res/layout/activity_terms_and_conditions.xml" value="0.2682291666666667" />
-        <entry key="app/src/main/res/layout/fragment_terms_and_conditions.xml" value="0.33177083333333335" />
-        <entry key="app/src/main/res/menu/menu.xml" value="0.14583333333333334" />
-        <entry key="app/src/main/res/menu/toolbar_activities.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_start.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/activity_terms_and_conditions.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/item_activities.xml" value="0.335" />
+        <entry key="app/src/main/res/menu/toolbar_activities.xml" value="0.23802083333333332" />
       </map>
     </option>
   </component>

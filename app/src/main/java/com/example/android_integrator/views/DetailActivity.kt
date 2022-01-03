@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.android_integrator.KeyIntents
+import com.example.android_integrator.TypeActivity
 import com.example.android_integrator.databinding.ActivityDetailBinding
 import com.example.android_integrator.models.APINotBored
 import com.example.android_integrator.models.NotBoredResponse
@@ -19,35 +20,37 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDetailBinding
     private val BASE_URL = "http://www.boredapi.com/api/"
-    private lateinit var call : Response<NotBoredResponse>
-    private lateinit var participants: String
-    private val RANDOM = "Random"
-    lateinit var type : String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-         participants = intent.getStringExtra("participants").toString()
-         type = intent.getStringExtra(KeyIntents.DETAIL.name).toString()
+        val participants = intent.getIntExtra(KeyIntents.PARTICIPANTS.name,0)
+        val type = intent.getStringExtra(KeyIntents.DETAIL.name)
 
-        binding.TBDetailActivities.title = type.replaceFirstChar {
+        binding.TBDetailActivities.title = type?.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(
                 Locale.getDefault()
             ) else it.toString()
         }
-                //TODO amountParticipant
-        type?.let { searchActivities(it,participants) }
+
+
+        type?.let {
+            searchActivities(it,participants)
+            hideType(it)
+        }
 
         binding.btnTryAnother.setOnClickListener {
             type?.let { searchActivities(it,participants) }
         }
 
-        hideType(type)
+
     }
 
     private fun hideType(type: String) {
-        if (type=="Random") {
+        if (type==TypeActivity.RANDOM.name) {
             binding.tvTypeActivityDetails.visibility = View.VISIBLE
             binding.ivTypeDetails.visibility = View.VISIBLE
         }
@@ -60,20 +63,24 @@ class DetailActivity : AppCompatActivity() {
             .build()
     }
 
-    fun validateRetrofitCallCases (type: String,amountParticipants: String):String{
+
+    fun validateRetrofitCallCases (type: String,amountParticipants: Int):String{
+
         //participants and random
-        return if (type == RANDOM&& amountParticipants!="") "activity?participants=$amountParticipants"
+        return if (type == TypeActivity.RANDOM.name && amountParticipants > 0) "activity?participants=$amountParticipants"
         //participants and type
-        else if (type != RANDOM && amountParticipants !="") "activity?type=$type&participants=$amountParticipants"
+        else if (type != TypeActivity.RANDOM.name && amountParticipants > 0) "activity?type=$type&participants=$amountParticipants"
         //no participants y type
-        else if (type !=RANDOM && amountParticipants=="") "activity?type=$type"
+        else if (type != TypeActivity.RANDOM.name && amountParticipants == 0) "activity?type=$type"
         // no participants and random
         else "activity"
     }
-    fun searchActivities(type : String,amountParticipants : String){
+
+    fun searchActivities(type : String,amountParticipants : Int){
+
 
             CoroutineScope(Dispatchers.IO).launch{
-                   call = getRetrofit().create(APINotBored::class.java)
+                val call = getRetrofit().create(APINotBored::class.java)
                            .getActivitiesByParticipants(validateRetrofitCallCases(type,amountParticipants))
 
                 val notBoredResponse : NotBoredResponse? = call.body()
@@ -81,37 +88,39 @@ class DetailActivity : AppCompatActivity() {
                 runOnUiThread{
 
                     notBoredResponse.let {
-                        if (it != null) {
-                            if(it.activity!=null) {
+                        if(call.isSuccessful){
+                            if(!call.body()?.activity.isNullOrEmpty()){
                                 loadResponse(it)
-                                if (call.isSuccessful) {
-
-                                } else {
-                                    //TODO NOT SUCCESSFUL
-                                }
                             }
+                        }else{
+                            //TODO NOT SUCCESSFUL
                         }
-
                     } ?: run {
                             //TODO NULL RESPONSE
                     }
                 }
             }
+
     }
+
 
     fun loadResponse(notBoredResponse: NotBoredResponse?){
         binding.tvCategoryTitleDetail.text = notBoredResponse?.activity
         binding.tvParticupantsDetails.text = notBoredResponse?.participants.toString()
         binding.tvTypeActivityDetails.text = notBoredResponse?.type
 
+
         val price = when(notBoredResponse!!.price){
-            0f  -> PriceType.Free
-            in 0f..0.3f -> PriceType.Low
-            in 0.3f..0.6f -> PriceType.Medium
-            else -> PriceType.High
+            0f  -> "Free"
+            in 0f..0.3f -> "Low"
+            in 0.3f..0.6f -> "Medium"
+            else -> "High"
         }
 
-        binding.tvPriceDetails.text = price.toString()
+        binding.tvPriceDetails.text = price
 
     }
+
+
+
 }

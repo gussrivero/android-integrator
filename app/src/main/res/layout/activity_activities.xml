@@ -18,7 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/Theme.Androidintegrator"
-        app:menu="@menu/toolbar_activities"/>
+        app:menu="@menu/toolbar_activities"
+        app:title="@string/activities"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVActivities"

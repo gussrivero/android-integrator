@@ -4,12 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.android_integrator.KeyIntents
 import com.example.android_integrator.R
 import com.example.android_integrator.databinding.ActivityInitialBinding
 
 class InitialActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInitialBinding
-    val nPARTICIPANTS= "participants"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
@@ -22,13 +23,11 @@ class InitialActivity : AppCompatActivity() {
     fun setOnClickListeners (){
         binding.btnstart.setOnClickListener {
           if (binding.chTermAndCon.isChecked) {
-              val inputParticipants =binding.ETNumParticipants.text.toString().replace(" ","")
-              if (inputParticipants== "") {
-                  goActivities("")
+              if (binding.ETNumParticipants.text.toString().isEmpty()) {
+                  goActivities(0)
               } else {
-                  val participants = binding.ETNumParticipants.text.toString().replace(" ","").toInt()
-                  if (participants > 0) goActivities(participants.toString())
-                  else Toast.makeText(this,getString(R.string.at_least_one_participant),Toast.LENGTH_LONG).show()
+                  val participants = binding.ETNumParticipants.text.toString().toInt()
+                  goActivities(participants)
               }
           }else Toast.makeText(this,getString(R.string.acept_tac),Toast.LENGTH_LONG).show()
         }
@@ -40,9 +39,9 @@ class InitialActivity : AppCompatActivity() {
 
     }
 
-    fun goActivities(participants : String){
+    fun goActivities(participants : Int){
         val intent = Intent(this, ActivitiesActivity::class.java)
-        intent.putExtra(nPARTICIPANTS, participants.toString())
+        intent.putExtra(KeyIntents.PARTICIPANTS.name, participants)
         startActivity(intent)
     }
 }

@@ -9,18 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_integrator.ActivitiesAdapter
 import com.example.android_integrator.KeyIntents
 import com.example.android_integrator.R
+import com.example.android_integrator.TypeActivity
 import com.example.android_integrator.databinding.ActivityActivitiesBinding
 
 
 class ActivitiesActivity : AppCompatActivity() {
 
-    private lateinit var participants :String
+    private var participants = 0
     private lateinit var binding: ActivityActivitiesBinding
-    private lateinit var adapter: ActivitiesAdapter
-    private val RANDOM = "Random"
-    private val ACTIVITIES = "Activities"
-    private val nameActivities = mutableListOf<String>("education", "recreational", "social", "diy",
-        "charity", "cooking", "relaxation", "music", "busywork")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +26,17 @@ class ActivitiesActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.TBActivities)
 
-         participants = intent.getStringExtra("participants").toString()
+        participants = intent.getIntExtra(KeyIntents.PARTICIPANTS.name,0)
+
         loadRecyclerView()
-        binding.TBActivities.title= ACTIVITIES
     }
 
 
     private fun loadRecyclerView() {
 
-        adapter = ActivitiesAdapter(nameActivities,this, participants)
+        val nameActivities = mutableListOf<String>("education", "recreational", "social", "diy",
+            "charity", "cooking", "relaxation", "music", "busywork")
+        val adapter = ActivitiesAdapter(nameActivities,this, participants)
         binding.RVActivities.layoutManager = LinearLayoutManager(this)
         binding.RVActivities.adapter = adapter
 
@@ -49,8 +47,8 @@ class ActivitiesActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.ActionRandom -> {
                 val intent = Intent(this, DetailActivity::class.java).apply {
-                    putExtra("participants",participants)
-                    putExtra(KeyIntents.DETAIL.name, RANDOM)
+                    putExtra(KeyIntents.PARTICIPANTS.name,participants)
+                    putExtra(KeyIntents.DETAIL.name, TypeActivity.RANDOM.name)
                 }
                 startActivity(intent)
             }

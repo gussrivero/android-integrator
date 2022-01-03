@@ -2,4 +2,5 @@
 <resources>
     <dimen name="titles">24sp</dimen>
     <dimen name="subtitles">18sp</dimen>
+    <dimen name="title_initial">40sp</dimen>
 </resources>

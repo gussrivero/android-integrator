@@ -14,7 +14,7 @@ class ActivitiesViewHolder(view : View) : RecyclerView.ViewHolder(view) {
     private val binding = ItemActivitiesBinding.bind(view)
 
 
-    fun bind(name : String,context : Context, participants:String){
+    fun bind(name : String,context : Context, participants:Int){
 
         binding.TVName.text = name
         binding.root.setOnClickListener {
