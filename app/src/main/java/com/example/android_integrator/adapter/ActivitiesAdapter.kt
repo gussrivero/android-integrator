@@ -23,7 +23,7 @@ class ActivitiesAdapter(
     override fun onBindViewHolder(holder: ActivitiesViewHolder, position: Int) {
         val nameAtPosition = nameActivities[position]
 
-        holder.bind(nameAtPosition,context, oneActivity)
+        holder.bind(nameAtPosition, context, oneActivity)
 
     }
 

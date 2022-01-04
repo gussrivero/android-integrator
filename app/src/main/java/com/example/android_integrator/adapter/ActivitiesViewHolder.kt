@@ -10,19 +10,19 @@ import com.example.android_integrator.databinding.ItemActivitiesBinding
 import com.example.android_integrator.models.OneActivity
 import com.example.android_integrator.views.DetailActivity
 
-class ActivitiesViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+class ActivitiesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ItemActivitiesBinding.bind(view)
 
 
-    fun bind(name : String,context : Context, oneActivity: OneActivity){
+    fun bind(name: String, context: Context, oneActivity: OneActivity) {
 
         binding.TVName.text = name
         binding.root.setOnClickListener {
 
             val intent = Intent(context, DetailActivity::class.java).apply {
                 oneActivity.type = name
-                putExtra(KeyIntents.ONEACTIVITY.name,oneActivity)
+                putExtra(KeyIntents.ONEACTIVITY.name, oneActivity)
             }
             context.startActivity(intent)
 

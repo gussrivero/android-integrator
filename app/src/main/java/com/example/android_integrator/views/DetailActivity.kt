@@ -25,7 +25,7 @@ import android.widget.Toast
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityDetailBinding
+    private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +44,15 @@ class DetailActivity : AppCompatActivity() {
 
 
         oneActivity.type?.let {
-            if (isConnectedInternet())searchActivities(oneActivity) else finish()
+            if (isConnectedInternet()) searchActivities(oneActivity) else finish()
             hideType(it)
         }
 
         binding.btnTryAnother.setOnClickListener {
             loading(true)
             oneActivity.type?.let {
-                if (isConnectedInternet()) searchActivities(oneActivity) else finish()}
+                if (isConnectedInternet()) searchActivities(oneActivity) else finish()
+            }
         }
 
 
@@ -64,35 +65,43 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    fun isConnectedInternet():Boolean{
+    fun isConnectedInternet(): Boolean {
 
-val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
         val isconnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
-        return if (!isconnected){
-            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show()
+        return if (!isconnected) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
             false
 
-        }else true
+        } else true
     }
-    suspend fun validateRetrofitCallCases (oneActivity: OneActivity): Response<NotBoredResponse> {
+
+    suspend fun validateRetrofitCallCases(oneActivity: OneActivity): Response<NotBoredResponse> {
 
         return if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and type
 
-            if(oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f){
-                ApiNotBoredImp().getActivitiesByParticipantsAndTypeWithPrice(oneActivity.type , oneActivity.amountParticipants,
-                oneActivity.minPrice,oneActivity.maxPrice)
-            }else{
-                ApiNotBoredImp().getActivitiesByParticipantsAndType(oneActivity.type , oneActivity.amountParticipants)
+            if (oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f) {
+                ApiNotBoredImp().getActivitiesByParticipantsAndTypeWithPrice(
+                    oneActivity.type, oneActivity.amountParticipants,
+                    oneActivity.minPrice, oneActivity.maxPrice
+                )
+            } else {
+                ApiNotBoredImp().getActivitiesByParticipantsAndType(
+                    oneActivity.type,
+                    oneActivity.amountParticipants
+                )
             }
 
-        } else if (oneActivity.type  == TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and random
+        } else if (oneActivity.type == TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and random
             ApiNotBoredImp().getActivitiesByParticipants(oneActivity.amountParticipants)
-        } else if (oneActivity.type  != TypeActivity.RANDOM.name && oneActivity.amountParticipants == 0) {//no participants y type
-            if(oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f){
-                ApiNotBoredImp().getActivitiesByTypeWithPrice(oneActivity.type,
-                    oneActivity.minPrice,oneActivity.maxPrice)
-            }else{
+        } else if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants == 0) {//no participants y type
+            if (oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f) {
+                ApiNotBoredImp().getActivitiesByTypeWithPrice(
+                    oneActivity.type,
+                    oneActivity.minPrice, oneActivity.maxPrice
+                )
+            } else {
                 ApiNotBoredImp().getActivitiesByType(oneActivity.type)
             }
 
@@ -100,39 +109,39 @@ val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
 
-    fun searchActivities(oneActivity: OneActivity){
+    fun searchActivities(oneActivity: OneActivity) {
 
-            CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
 
-                val call = validateRetrofitCallCases(oneActivity)
-                val notBoredResponse : NotBoredResponse? = call.body()
+            val call = validateRetrofitCallCases(oneActivity)
+            val notBoredResponse: NotBoredResponse? = call.body()
 
-                runOnUiThread{
-                    notBoredResponse.let {
-                        if(call.isSuccessful){
-                            if(!call.body()?.activity.isNullOrEmpty()){
-                                loadResponse(it)
-                            }else{
-                                notResponse()
-                                loading(false)
-                            }
-                        }else{
+            runOnUiThread {
+                notBoredResponse.let {
+                    if (call.isSuccessful) {
+                        if (!call.body()?.activity.isNullOrEmpty()) {
+                            loadResponse(it)
+                        } else {
                             notResponse()
                             loading(false)
                         }
+                    } else {
+                        notResponse()
+                        loading(false)
                     }
                 }
             }
+        }
 
     }
 
-    fun notResponse(){
+    fun notResponse() {
         binding.tvCategoryTitleDetail.text = getString(R.string.text_notresponse)
         binding.CLDetail.visibility = View.INVISIBLE
     }
 
 
-    fun loadResponse(notBoredResponse: NotBoredResponse?){
+    fun loadResponse(notBoredResponse: NotBoredResponse?) {
 
         binding.CLDetail.visibility = View.VISIBLE
 
@@ -141,8 +150,8 @@ val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         binding.tvTypeActivityDetails.text = notBoredResponse?.type
         loading(false)
 
-        val price = when(notBoredResponse!!.price){
-            0f  -> getString(R.string.cost_free)
+        val price = when (notBoredResponse!!.price) {
+            0f -> getString(R.string.cost_free)
             in 0f..0.3f -> getString(R.string.cost_low)
             in 0.3f..0.6f -> getString(R.string.cost_medium)
             in 0.6f..1f -> getString(R.string.cost_high)
@@ -168,7 +177,7 @@ val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
 
-    fun loading (result:Boolean ){
+    fun loading(result: Boolean) {
         if (result)
             binding.pbLoadingData.visibility = View.VISIBLE
         else

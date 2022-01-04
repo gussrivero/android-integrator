@@ -9,24 +9,27 @@ class ApiNotBoredImp : APINotBored {
     private val BASE_URL = "http://www.boredapi.com/api/"
 
     private fun getRetrofit(): APINotBored {
-        val retrofit =Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit.create(APINotBored::class.java)
 
     }
-    override suspend fun getActivitiesByParticipants(participants:Int): Response<NotBoredResponse> {
-        return  getRetrofit().getActivitiesByParticipants(participants)
+
+    override suspend fun getActivitiesByParticipants(participants: Int): Response<NotBoredResponse> {
+        return getRetrofit().getActivitiesByParticipants(participants)
     }
+
     override suspend fun getActivitiesByType(type: String): Response<NotBoredResponse> {
-        return  getRetrofit().getActivitiesByType(type)
+        return getRetrofit().getActivitiesByType(type)
     }
+
     override suspend fun getActivitiesByParticipantsAndType(
         type: String,
         participants: Int
     ): Response<NotBoredResponse> {
-        return  getRetrofit().getActivitiesByParticipantsAndType(type,participants)
+        return getRetrofit().getActivitiesByParticipantsAndType(type, participants)
     }
 
     override suspend fun getActivitiesByParticipantsAndTypeWithPrice(
@@ -35,7 +38,12 @@ class ApiNotBoredImp : APINotBored {
         minPrice: Float,
         maxPrice: Float
     ): Response<NotBoredResponse> {
-        return  getRetrofit().getActivitiesByParticipantsAndTypeWithPrice(type,participants,minPrice,maxPrice)
+        return getRetrofit().getActivitiesByParticipantsAndTypeWithPrice(
+            type,
+            participants,
+            minPrice,
+            maxPrice
+        )
     }
 
     override suspend fun getActivitiesByTypeWithPrice(
@@ -43,7 +51,7 @@ class ApiNotBoredImp : APINotBored {
         minPrice: Float,
         maxPrice: Float
     ): Response<NotBoredResponse> {
-        return  getRetrofit().getActivitiesByTypeWithPrice(type,minPrice,maxPrice)
+        return getRetrofit().getActivitiesByTypeWithPrice(type, minPrice, maxPrice)
     }
 
     override suspend fun getRandom(): Response<NotBoredResponse> {
