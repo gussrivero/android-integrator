@@ -7,7 +7,6 @@ import com.example.android_integrator.KeyIntents
 import com.example.android_integrator.R
 import com.example.android_integrator.TypeActivity
 import com.example.android_integrator.databinding.ActivityDetailBinding
-import com.example.android_integrator.models.APINotBored
 import com.example.android_integrator.models.ApiNotBoredImp
 import com.example.android_integrator.models.NotBoredResponse
 import com.example.android_integrator.models.OneActivity
@@ -15,8 +14,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
@@ -29,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.TBDetailActivities)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        loading(true)
         val oneActivity = intent.getSerializableExtra(KeyIntents.ONEACTIVITY.name) as OneActivity
 
         supportActionBar?.title = oneActivity.type?.replaceFirstChar {
@@ -45,6 +42,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.btnTryAnother.setOnClickListener {
+            loading(true)
             oneActivity.type?.let { searchActivities(oneActivity) }
         }
 
@@ -60,7 +58,7 @@ class DetailActivity : AppCompatActivity() {
 
 
     suspend fun validateRetrofitCallCases (oneActivity: OneActivity): Response<NotBoredResponse> {
-        System.out.println("MIN "+oneActivity.minPrice+" MAX"+oneActivity.maxPrice)
+
         return if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and type
 
             if(oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f){
@@ -80,13 +78,11 @@ class DetailActivity : AppCompatActivity() {
                 ApiNotBoredImp().getActivitiesByType(oneActivity.type)
             }
 
-
         } else ApiNotBoredImp().getRandom()        // no participants and random
     }
 
 
     fun searchActivities(oneActivity: OneActivity){
-
 
             CoroutineScope(Dispatchers.IO).launch{
 
@@ -94,16 +90,17 @@ class DetailActivity : AppCompatActivity() {
                 val notBoredResponse : NotBoredResponse? = call.body()
 
                 runOnUiThread{
-
                     notBoredResponse.let {
                         if(call.isSuccessful){
                             if(!call.body()?.activity.isNullOrEmpty()){
                                 loadResponse(it)
                             }else{
                                 notResponse()
+                                loading(false)
                             }
                         }else{
                             notResponse()
+                            loading(false)
                         }
                     }
                 }
@@ -124,7 +121,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvCategoryTitleDetail.text = notBoredResponse?.activity
         binding.tvParticupantsDetails.text = notBoredResponse?.participants.toString()
         binding.tvTypeActivityDetails.text = notBoredResponse?.type
-
+        loading(false)
 
         val price = when(notBoredResponse!!.price){
             0f  -> getString(R.string.cost_free)
@@ -139,5 +136,11 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
+    fun loading (result:Boolean ){
+        if (result)
+            binding.pbLoadingData.visibility = View.VISIBLE
+        else
+            binding.pbLoadingData.visibility = View.GONE
+    }
 
 }

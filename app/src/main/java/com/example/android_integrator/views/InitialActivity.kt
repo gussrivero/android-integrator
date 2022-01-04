@@ -20,7 +20,6 @@ class InitialActivity : AppCompatActivity(), RangeSlider.OnChangeListener {
         binding = ActivityInitialBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setOnClickListeners()
-
         binding.SBPrice.addOnChangeListener(this)
     }
 

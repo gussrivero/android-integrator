@@ -19,21 +19,16 @@ class ActivitiesActivity : AppCompatActivity() {
     private lateinit var oneActivity : OneActivity
     private lateinit var binding: ActivityActivitiesBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityActivitiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.TBActivities)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         oneActivity = intent.getSerializableExtra(KeyIntents.ONEACTIVITY.name) as OneActivity
-
 
         loadRecyclerView()
     }
-
 
     private fun loadRecyclerView() {
 
@@ -45,7 +40,6 @@ class ActivitiesActivity : AppCompatActivity() {
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem) :Boolean {
         when (item.itemId) {
             R.id.ActionRandom -> {
@@ -55,14 +49,11 @@ class ActivitiesActivity : AppCompatActivity() {
                 }
                 startActivity(intent)
             }
-
-
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
         menuInflater.inflate(R.menu.toolbar_activities,menu)
         return super.onCreateOptionsMenu(menu)
     }

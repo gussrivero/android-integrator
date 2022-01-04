@@ -1,10 +1,8 @@
 package com.example.android_integrator.models
 
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Query
 
 class ApiNotBoredImp : APINotBored {
     private val BASE_URL = "http://www.boredapi.com/api/"
@@ -46,8 +44,6 @@ class ApiNotBoredImp : APINotBored {
     ): Response<NotBoredResponse> {
         return  getRetrofit().getActivitiesByTypeWithPrice(type,minPrice,maxPrice)
     }
-
-
 
     override suspend fun getRandom(): Response<NotBoredResponse> {
         return getRetrofit().getRandom()
