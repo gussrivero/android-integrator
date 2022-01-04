@@ -32,7 +32,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.203" />
+        app:layout_constraintVertical_bias="0.203"
+        tools:ignore="TextContrastCheck" />
 
 
     <TextView
@@ -40,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="112dp"
         android:layout_marginEnd="30dp"
         android:text="@string/participants"
         android:textColor="@color/black"
@@ -55,18 +56,20 @@
         android:id="@+id/ET_NumParticipants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="30dp"
         android:background="@color/white"
         android:inputType="number"
+        android:minHeight="48dp"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TV_participants"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintVertical_bias="0.003"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btnstart"
@@ -80,7 +83,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_NumParticipants" />
+        app:layout_constraintTop_toBottomOf="@+id/ET_NumParticipants"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/TV_termsAndConditions"
@@ -90,12 +94,13 @@
         android:text="@string/terms_and_conditions"
         app:layout_constraintEnd_toEndOf="@+id/btnstart"
         app:layout_constraintStart_toStartOf="@+id/btnstart"
-        app:layout_constraintTop_toBottomOf="@+id/btnstart" />
+        app:layout_constraintTop_toBottomOf="@+id/btnstart"
+        tools:ignore="TextContrastCheck" />
 
     <CheckBox
         android:id="@+id/ch_term_and_con"
-        android:layout_width="37dp"
-        android:layout_height="44dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/TV_termsAndConditions"
         app:layout_constraintEnd_toStartOf="@+id/TV_termsAndConditions"
         app:layout_constraintTop_toTopOf="@+id/TV_termsAndConditions"
@@ -115,7 +120,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextView5"
         app:layout_constraintVertical_bias="0.036"
-        app:values="@array/initial_range_slider_values" />
+        app:values="@array/initial_range_slider_values"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

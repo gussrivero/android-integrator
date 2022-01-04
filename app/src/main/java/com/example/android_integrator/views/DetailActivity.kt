@@ -15,6 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.util.*
+import android.view.Menu
+
+import android.view.MenuItem
+
+
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -133,6 +139,20 @@ class DetailActivity : AppCompatActivity() {
 
         binding.tvPriceDetails.text = price
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return true
     }
 
 
