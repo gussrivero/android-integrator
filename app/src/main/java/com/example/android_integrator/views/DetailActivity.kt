@@ -55,15 +55,15 @@ class DetailActivity : AppCompatActivity() {
 
 
     }
-
+    //hide type if call is RANDOM
     private fun hideType(type: String) {
         if (type == TypeActivity.RANDOM.name) {
             binding.tvTypeActivityDetails.visibility = View.VISIBLE
             binding.ivTypeDetails.visibility = View.VISIBLE
         }
     }
-
-    fun isConnectedInternet(): Boolean {
+    //chek internet connection
+    private fun isConnectedInternet(): Boolean {
 
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
@@ -74,13 +74,13 @@ class DetailActivity : AppCompatActivity() {
 
         } else true
     }
+    //validate call cases by the user´s inputs
+    private suspend fun validateRetrofitCallCases(oneActivity: OneActivity): Response<NotBoredResponse> {
 
-    suspend fun validateRetrofitCallCases(oneActivity: OneActivity): Response<NotBoredResponse> {
+        return if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and type case
 
-        return if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and type
-
-            if (oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f) {
-                ApiNotBoredImp().getActivitiesByParticipantsAndTypeWithPrice(
+            if (oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f) {// validate if prices is set or not
+                ApiNotBoredImp().getActivitiesByParticipantsAndTypeWithPrice(//participants types and price case
                     oneActivity.type, oneActivity.amountParticipants,
                     oneActivity.minPrice, oneActivity.maxPrice
                 )
@@ -91,9 +91,9 @@ class DetailActivity : AppCompatActivity() {
                 )
             }
 
-        } else if (oneActivity.type == TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and random
+        } else if (oneActivity.type == TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and random case
             ApiNotBoredImp().getActivitiesByParticipants(oneActivity.amountParticipants)
-        } else if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants == 0) {//no participants y type
+        } else if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants == 0) {//no participants y type case
             if (oneActivity.minPrice > 0f || oneActivity.maxPrice < 1f) {
                 ApiNotBoredImp().getActivitiesByTypeWithPrice(
                     oneActivity.type,
@@ -107,7 +107,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
-    fun searchActivities(oneActivity: OneActivity) {
+    private fun searchActivities(oneActivity: OneActivity) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -132,13 +132,13 @@ class DetailActivity : AppCompatActivity() {
         }
 
     }
-
+    // show null message response
     fun notResponse() {
         binding.tvCategoryTitleDetail.text = getString(R.string.text_notresponse)
         binding.CLDetail.visibility = View.INVISIBLE
     }
 
-
+    //fill the views with response
     fun loadResponse(notBoredResponse: NotBoredResponse?) {
 
         binding.CLDetail.visibility = View.VISIBLE
@@ -174,7 +174,7 @@ class DetailActivity : AppCompatActivity() {
         return true
     }
 
-
+    //show and hide progress bar
     fun loading(result: Boolean) {
         if (result)
             binding.pbLoadingData.visibility = View.VISIBLE
