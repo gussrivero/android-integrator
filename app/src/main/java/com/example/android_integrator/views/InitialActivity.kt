@@ -22,6 +22,8 @@ class InitialActivity : AppCompatActivity(), RangeSlider.OnChangeListener {
         setOnClickListeners()
 
         binding.SBPrice.addOnChangeListener(this)
+
+
     }
 
     fun setOnClickListeners (){

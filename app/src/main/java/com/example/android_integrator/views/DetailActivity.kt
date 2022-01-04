@@ -18,6 +18,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import android.view.Menu
+
+import android.view.MenuItem
+
+
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -136,6 +142,20 @@ class DetailActivity : AppCompatActivity() {
 
         binding.tvPriceDetails.text = price
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return true
     }
 
 
