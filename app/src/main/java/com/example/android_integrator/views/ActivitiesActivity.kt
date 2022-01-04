@@ -16,7 +16,7 @@ import com.example.android_integrator.models.OneActivity
 
 class ActivitiesActivity : AppCompatActivity() {
 
-    private lateinit var oneActivity : OneActivity
+    private lateinit var oneActivity: OneActivity
     private lateinit var binding: ActivityActivitiesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,20 +32,22 @@ class ActivitiesActivity : AppCompatActivity() {
 
     private fun loadRecyclerView() {
 
-        val nameActivities = mutableListOf<String>("education", "recreational", "social", "diy",
-            "charity", "cooking", "relaxation", "music", "busywork")
-        val adapter = ActivitiesAdapter(nameActivities,this, oneActivity)
+        val nameActivities = mutableListOf<String>(
+            "education", "recreational", "social", "diy",
+            "charity", "cooking", "relaxation", "music", "busywork"
+        )
+        val adapter = ActivitiesAdapter(nameActivities, this, oneActivity)
         binding.RVActivities.layoutManager = LinearLayoutManager(this)
         binding.RVActivities.adapter = adapter
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) :Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.ActionRandom -> {
                 val intent = Intent(this, DetailActivity::class.java).apply {
                     oneActivity.type = TypeActivity.RANDOM.name
-                    putExtra(KeyIntents.ONEACTIVITY.name,oneActivity)
+                    putExtra(KeyIntents.ONEACTIVITY.name, oneActivity)
                 }
                 startActivity(intent)
             }
@@ -54,7 +56,7 @@ class ActivitiesActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_activities,menu)
+        menuInflater.inflate(R.menu.toolbar_activities, menu)
         return super.onCreateOptionsMenu(menu)
     }
 }

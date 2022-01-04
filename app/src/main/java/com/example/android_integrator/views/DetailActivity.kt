@@ -43,16 +43,14 @@ class DetailActivity : AppCompatActivity() {
         }
 
 
-        oneActivity.type?.let {
-            if (isConnectedInternet()) searchActivities(oneActivity) else finish()
-            hideType(it)
-        }
+
+        if (isConnectedInternet()) searchActivities(oneActivity) else finish()
+        hideType(oneActivity.type)
+
 
         binding.btnTryAnother.setOnClickListener {
             loading(true)
-            oneActivity.type?.let {
                 if (isConnectedInternet()) searchActivities(oneActivity) else finish()
-            }
         }
 
 
