@@ -1,15 +1,16 @@
-package com.example.android_integrator
+package com.example.android_integrator.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_integrator.R
 import com.example.android_integrator.models.OneActivity
 
 class ActivitiesAdapter(
     private val nameActivities: List<String>,
     val context: Context,
-    val oneActivity: OneActivity
+    private val oneActivity: OneActivity
 ) : RecyclerView.Adapter<ActivitiesViewHolder>() {
 
 

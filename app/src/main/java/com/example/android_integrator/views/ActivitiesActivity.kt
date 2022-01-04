@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android_integrator.ActivitiesAdapter
-import com.example.android_integrator.KeyIntents
+import com.example.android_integrator.adapter.ActivitiesAdapter
+import com.example.android_integrator.enums.KeyIntents
 import com.example.android_integrator.R
-import com.example.android_integrator.TypeActivity
+import com.example.android_integrator.enums.TypeActivity
 import com.example.android_integrator.databinding.ActivityActivitiesBinding
 import com.example.android_integrator.models.OneActivity
 

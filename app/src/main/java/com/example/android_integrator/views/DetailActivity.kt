@@ -1,13 +1,15 @@
 package com.example.android_integrator.views
 
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.android_integrator.KeyIntents
+import com.example.android_integrator.enums.KeyIntents
 import com.example.android_integrator.R
-import com.example.android_integrator.TypeActivity
+import com.example.android_integrator.enums.TypeActivity
 import com.example.android_integrator.databinding.ActivityDetailBinding
-import com.example.android_integrator.models.ApiNotBoredImp
+import com.example.android_integrator.service.ApiNotBoredImp
 import com.example.android_integrator.models.NotBoredResponse
 import com.example.android_integrator.models.OneActivity
 import kotlinx.coroutines.CoroutineScope
@@ -18,8 +20,7 @@ import java.util.*
 import android.view.Menu
 
 import android.view.MenuItem
-
-
+import android.widget.Toast
 
 
 class DetailActivity : AppCompatActivity() {
@@ -43,13 +44,14 @@ class DetailActivity : AppCompatActivity() {
 
 
         oneActivity.type?.let {
-            searchActivities(oneActivity)
+            if (isConnectedInternet())searchActivities(oneActivity) else finish()
             hideType(it)
         }
 
         binding.btnTryAnother.setOnClickListener {
             loading(true)
-            oneActivity.type?.let { searchActivities(oneActivity) }
+            oneActivity.type?.let {
+                if (isConnectedInternet()) searchActivities(oneActivity) else finish()}
         }
 
 
@@ -62,7 +64,17 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    fun isConnectedInternet():Boolean{
 
+val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        val isconnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
+        return if (!isconnected){
+            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show()
+            false
+
+        }else true
+    }
     suspend fun validateRetrofitCallCases (oneActivity: OneActivity): Response<NotBoredResponse> {
 
         return if (oneActivity.type != TypeActivity.RANDOM.name && oneActivity.amountParticipants > 0) {//participants and type

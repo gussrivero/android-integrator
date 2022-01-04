@@ -1,5 +1,6 @@
-package com.example.android_integrator.models
+package com.example.android_integrator.service
 
+import com.example.android_integrator.models.NotBoredResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

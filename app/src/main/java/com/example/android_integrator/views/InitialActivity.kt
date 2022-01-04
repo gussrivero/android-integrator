@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.android_integrator.KeyIntents
+import com.example.android_integrator.enums.KeyIntents
 import com.example.android_integrator.R
 import com.example.android_integrator.databinding.ActivityInitialBinding
 import com.example.android_integrator.models.OneActivity

@@ -1,10 +1,11 @@
-package com.example.android_integrator
+package com.example.android_integrator.adapter
 
 
 import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_integrator.enums.KeyIntents
 import com.example.android_integrator.databinding.ItemActivitiesBinding
 import com.example.android_integrator.models.OneActivity
 import com.example.android_integrator.views.DetailActivity
